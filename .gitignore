@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+data/contracts/*.pdf
+!data/contracts/.keep
+data/*.csv
+.streamlit/secrets.toml
