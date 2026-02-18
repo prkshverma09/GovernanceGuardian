@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "properties": {
+      "content": {
+        "type": "text"
+      },
+      "content_embedding": {
+        "type": "sparse_vector"
+      },
+      "source_file": {
+        "type": "keyword"
+      },
+      "chunk_id": {
+        "type": "integer"
+      }
+    }
+  }
+}

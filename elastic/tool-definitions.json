@@ -1,0 +1,20 @@
+{
+  "tools": [
+    {
+      "name": "policy_retriever",
+      "type": "index_search",
+      "config": {
+        "index_name": "legal-knowledge-base",
+        "search_type": "sparse_vector",
+        "model_id": ".elser_model_2"
+      }
+    },
+    {
+      "name": "dataset_inspector",
+      "type": "esql",
+      "config": {
+        "query": "FROM customer_leads_prod | WHERE age < 18 OR country == \"GDPR_Restricted_Zone\" | STATS minors_count = COUNT(CASE(age < 18, 1, NULL)), restricted_count = COUNT(CASE(country == \"GDPR_Restricted_Zone\", 1, NULL)), total_risky = COUNT(*) | EVAL is_risky = CASE(total_risky > 0, true, false) | KEEP minors_count, restricted_count, total_risky, is_risky"
+      }
+    }
+  ]
+}

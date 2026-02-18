@@ -1,0 +1,16 @@
+{
+  "description": "Enriches legal contract chunks with ELSER sparse vector embeddings",
+  "processors": [
+    {
+      "inference": {
+        "model_id": ".elser_model_2",
+        "input_output": [
+          {
+            "input_field": "content",
+            "output_field": "content_embedding"
+          }
+        ]
+      }
+    }
+  ]
+}

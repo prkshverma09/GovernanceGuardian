@@ -1,0 +1,21 @@
+{
+  "mappings": {
+    "properties": {
+      "Name": {
+        "type": "text"
+      },
+      "Email": {
+        "type": "keyword"
+      },
+      "Age": {
+        "type": "integer"
+      },
+      "Country": {
+        "type": "keyword"
+      },
+      "Subscription_Type": {
+        "type": "keyword"
+      }
+    }
+  }
+}

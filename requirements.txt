@@ -1,0 +1,7 @@
+elasticsearch
+streamlit
+requests
+faker
+python-dotenv
+pytest
+pytest-cov
