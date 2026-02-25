@@ -4,8 +4,9 @@ import requests
 import json
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables (.env then .env.local so local overrides work)
 load_dotenv()
+load_dotenv(".env.local")
 
 def parse_agent_response(response_json: dict):
     """Parses the response from the Elastic Agent Builder (Kibana API).
@@ -83,7 +84,8 @@ class AgentClient:
         if conversation_id:
             payload["conversation_id"] = conversation_id
 
-        response = requests.post(endpoint, headers=headers, json=payload)
+        # Elastic converse API is synchronous (no streaming). Allow up to 2 min for full response.
+        response = requests.post(endpoint, headers=headers, json=payload, timeout=120)
 
         if response.status_code >= 400:
             print(f"Error Response Body: {response.text}")

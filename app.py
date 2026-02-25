@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import requests
 from scripts.agent_client import AgentClient, parse_agent_response
 from app_helpers import format_tool_call, format_citation, initialize_session_state
 
@@ -54,10 +55,13 @@ if prompt := st.chat_input("Ask a compliance question..."):
 
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Get agent response
+    # Get agent response (Elastic API is synchronous — no streaming; full response after ~30–60s)
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        message_placeholder.markdown("🔍 *Thinking...*")
+        message_placeholder.markdown(
+            "🔍 **Checking policy and data…**  \n"
+            "*The agent runs in the cloud; the first response usually takes 30–60 seconds.*"
+        )
 
         try:
             client = AgentClient()
@@ -89,5 +93,9 @@ if prompt := st.chat_input("Ask a compliance question..."):
                 "citations": formatted_citations
             })
 
+        except requests.exceptions.Timeout:
+            message_placeholder.markdown("")
+            st.error("The agent took too long to respond (over 2 minutes). Try again or rephrase your question.")
         except Exception as e:
+            message_placeholder.markdown("")
             st.error(f"Error: {str(e)}")

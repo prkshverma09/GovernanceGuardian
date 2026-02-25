@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+load_dotenv(".env.local")
 
 def get_es_client():
     cloud_id = os.getenv("ELASTIC_CLOUD_ID")

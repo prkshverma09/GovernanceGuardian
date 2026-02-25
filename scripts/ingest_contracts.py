@@ -8,6 +8,7 @@ from scripts.chunker import chunk_text
 
 # Load environment variables
 load_dotenv()
+load_dotenv(".env.local")
 
 def get_es_client():
     cloud_id = os.getenv("ELASTIC_CLOUD_ID")
@@ -56,19 +57,30 @@ def extract_text_from_pdf(pdf_path):
         text += page.get_text()
     return text
 
+def extract_text_from_file(file_path):
+    """Extract text from a .pdf (PyMuPDF) or .txt (UTF-8) file."""
+    if file_path.lower().endswith(".pdf"):
+        return extract_text_from_pdf(file_path)
+    if file_path.lower().endswith(".txt"):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
 def ingest_contracts():
     es = get_es_client()
     index_name = setup_elasticsearch(es)
 
     contracts_pattern = "data/contracts/*.pdf"
-    contract_files = glob.glob(contracts_pattern)
+    contract_files = sorted(glob.glob(contracts_pattern))
+    txt_pattern = "data/contracts/*.txt"
+    contract_files += sorted(glob.glob(txt_pattern))
 
     actions = []
-    for pdf_path in contract_files:
-        filename = os.path.basename(pdf_path)
+    for file_path in contract_files:
+        filename = os.path.basename(file_path)
         print(f"Processing {filename}...")
 
-        full_text = extract_text_from_pdf(pdf_path)
+        full_text = extract_text_from_file(file_path)
         chunks = chunk_text(full_text)
 
         for i, chunk in enumerate(chunks):

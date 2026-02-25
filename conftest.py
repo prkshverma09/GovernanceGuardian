@@ -3,8 +3,9 @@ import pytest
 from elasticsearch import Elasticsearch
 from dotenv import load_dotenv
 
-# Load environment variables from .env if it exists
+# Load environment variables from .env and .env.local if they exist
 load_dotenv()
+load_dotenv(".env.local")
 
 @pytest.fixture(scope="session")
 def es_client():

@@ -1,0 +1,7 @@
+Non-Disclosure and Data Use Agreement - Partner A
+
+Non-Disclosure of PII. The Receiving Party shall not disclose, reveal, or otherwise make available any Personally Identifiable Information (PII) of the Disclosing Party's customers to any third party without express written consent.
+
+Marketing to Minors. The Receiving Party is strictly prohibited from using any dataset containing records of individuals under the age of eighteen (18) for marketing, promotional, or advertising purposes.
+
+Data Locality. Any data processing activities involving citizens of the European Union must comply with GDPR regulations. Storage in restricted zones is strictly prohibited.

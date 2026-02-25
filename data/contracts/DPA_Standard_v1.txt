@@ -1,0 +1,5 @@
+Data Processing Addendum (DPA) - Standard Version 1
+
+Processing Limits. The Processor shall only process personal data upon documented instructions from the Controller. Using the 'customer_leads_prod' dataset for email targeting requires prior verification of age and region compliance.
+
+Forbidden Fields. The Processor shall not collect or process sensitive data fields such as Social Security Numbers (SSN), medical history, or precise geolocation without explicit authorization.

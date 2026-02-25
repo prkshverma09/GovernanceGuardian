@@ -19,6 +19,8 @@
 - An Elastic Cloud project (with ELSER v2 enabled)
 - `.env` file populated with credentials (see `.env.example`)
 
+**New to Elastic Cloud?** Follow **[docs/ELASTIC_CLOUD_SETUP.md](docs/ELASTIC_CLOUD_SETUP.md)** for step-by-step setup. You can either run **`python scripts/setup_elastic_api.py`** (API-based setup with `.env` credentials) or complete setup manually in Kibana.
+
 ## Installation
 1. Clone the repository.
 2. Create and activate a virtual environment:
@@ -33,8 +35,8 @@
 
 ## Setup & Ingestion
 1. **Prepare Data**:
-   - Legal PDFs are in `data/contracts/`
-   - Synthetic customer data is generated using `python scripts/generate_customers.py`
+   - Sample contract text is in `data/contracts/*.txt`. Optionally add PDFs to `data/contracts/` or run `python scripts/generate_contracts.py` to generate sample PDFs (requires PyMuPDF).
+   - Synthetic customer data: run `python scripts/generate_customers.py` to create `data/customers.csv`.
 2. **Ingest to Elastic**:
    - Ingest contracts: `python scripts/ingest_contracts.py`
    - Ingest customers: `python scripts/ingest_customers.py`
@@ -54,6 +56,8 @@ pytest
 ```
 - Integration tests: `pytest -m integration`
 - E2E tests: `pytest -m e2e`
+
+For step-by-step manual testing (Streamlit UI, demo flow, troubleshooting), see **[docs/MANUAL_TESTING.md](docs/MANUAL_TESTING.md)**.
 
 ## License
 MIT (see LICENSE file)

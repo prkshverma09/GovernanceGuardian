@@ -1,0 +1,7 @@
+Master Service Agreement - General Compliance Policy
+
+General Privacy Policy. All parties must ensure that data usage is limited to the specific purpose defined in the Work Order. Bulk emailing of customer lists is allowed only if the list has been scrubbed of opt-out records and minors.
+
+Definition of Minors. For the purposes of this agreement, a 'minor' is defined as any natural person under the age of 18 years old.
+
+Restricted Regions. No data originating from or involving residents of 'GDPR_Restricted_Zone' may be used for automated campaign targeting without enhanced legal review.
