@@ -11,13 +11,14 @@ load_dotenv()
 load_dotenv(".env.local")
 
 def get_es_client():
-    cloud_id = os.getenv("ELASTIC_CLOUD_ID")
     api_key = os.getenv("ELASTIC_API_KEY")
-    es_url = os.getenv("ELASTICSEARCH_URL")
-
+    es_url = (os.getenv("ELASTICSEARCH_URL") or "").strip().rstrip("/")
+    cloud_id = (os.getenv("ELASTIC_CLOUD_ID") or "").strip()
+    if es_url:
+        return Elasticsearch(es_url, api_key=api_key)
     if cloud_id:
         return Elasticsearch(cloud_id=cloud_id, api_key=api_key)
-    return Elasticsearch(es_url, api_key=api_key)
+    raise ValueError("Set ELASTICSEARCH_URL or ELASTIC_CLOUD_ID in .env")
 
 def setup_elasticsearch(es):
     # 1. Discover actual ELSER model ID

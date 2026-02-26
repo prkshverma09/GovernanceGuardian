@@ -1,0 +1,11 @@
+Hi everyone. This is Governance Guardian — an AI compliance officer that turns multi-day legal reviews into a thirty-second chat. It's built on Elastic Agent Builder and Elasticsearch. We use ELSER v2 for semantic search over legal contracts, and ES|QL for live data inspection, remediation, and time-series audit. One agent, policy plus data plus action. In this demo we have contracts in our knowledge base and access to customer leads and access logs. In most companies, using a dataset for marketing means waiting days for legal to check contracts and data. We automated that.
+
+First, policy. I type: what is our policy on emailing minors according to the contracts? The agent uses policy_retriever. That tool runs ELSER v2 — Elastic's Learned Sparse EncodeR — on our legal knowledge base and returns the exact clause with a source citation.
+
+Next, the data check. I type: can I use customer_leads_prod for email marketing? Check policy and data. The agent calls both policy_retriever and dataset_inspector. The inspector runs ES|QL against our production index in real time and counts minors and restricted regions. As you can see, it denies the request with actual numbers from the cluster.
+
+Now remediation. I ask: give me an ES|QL query to exclude minors and restricted regions. The agent returns a runnable query — filter by age and region. Then I click Run remediation now in the sidebar. Our app calls the remediation API, which runs that ES|QL and bulk-indexes compliant records into a new index. You see the green success box — we didn't just suggest, we created the safe dataset.
+
+We also added a time-series auditor and an MCP server. I can ask: have there been any compliance breaches in the last seven days? The log_auditor ES|QL tool queries access logs. For the MCP part I demo in Claude Desktop: I add our locally running MCP server, then use the check_compliance tool — same agent, right inside Claude.
+
+So: ELSER v2 for semantic search, ES|QL for live data and logs, and Agent Builder for tool orchestration. One agent, policy plus data plus remediation plus audit. Thank you.

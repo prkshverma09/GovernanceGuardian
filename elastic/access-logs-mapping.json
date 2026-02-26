@@ -1,0 +1,12 @@
+{
+  "mappings": {
+    "properties": {
+      "timestamp": { "type": "date" },
+      "user": { "type": "keyword" },
+      "ip_address": { "type": "keyword" },
+      "region": { "type": "keyword" },
+      "records_downloaded": { "type": "integer" },
+      "dataset_name": { "type": "keyword" }
+    }
+  }
+}

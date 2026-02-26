@@ -41,6 +41,9 @@
    - Ingest contracts: `python scripts/ingest_contracts.py`
    - Ingest customers: `python scripts/ingest_customers.py`
 
+**One-command setup so all sidebar example queries have data:**  
+Run `python scripts/setup_all_data.py` to generate and ingest customer data (`customer_leads_prod`) and access logs (`data_access_logs_prod`). Then run `python scripts/ingest_contracts.py` for the policy index (`legal-knowledge-base`). For the queries *"Have there been any compliance breaches in the last 7 days?"* and *"Audit data access logs for high-volume downloads by region"* to work, add the **log_auditor** ES|QL tool to your agent in Kibana (see `elastic/agent-config.md` §4).
+
 ## Running the App
 1. Configure the Agent in Elastic Cloud (see `elastic/agent-config.md`).
 2. Update `ELASTIC_AGENT_ID` in `.env`.

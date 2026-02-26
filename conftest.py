@@ -20,10 +20,11 @@ def es_client():
     if not api_key:
         pytest.fail("ELASTIC_API_KEY not found in environment variables.")
 
-    if cloud_id:
-        client = Elasticsearch(cloud_id=cloud_id, api_key=api_key)
-    elif es_url:
-        client = Elasticsearch(es_url, api_key=api_key)
+    # Prefer ELASTICSEARCH_URL (works with deployment URLs); Cloud ID must be full format if used
+    if es_url and es_url.strip():
+        client = Elasticsearch(es_url.strip().rstrip("/"), api_key=api_key)
+    elif cloud_id and cloud_id.strip():
+        client = Elasticsearch(cloud_id=cloud_id.strip(), api_key=api_key)
     else:
         pytest.fail("Neither ELASTIC_CLOUD_ID nor ELASTICSEARCH_URL found in environment variables.")
 

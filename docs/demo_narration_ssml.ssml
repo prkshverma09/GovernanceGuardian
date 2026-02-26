@@ -1,0 +1,45 @@
+<speak>
+<p>
+Hi everyone. This is <emphasis level="strong">Governance Guardian</emphasis> — an AI compliance officer that turns multi-day legal reviews into a thirty-second chat.
+<break time="1s"/>
+It's built on <emphasis level="strong">Elastic Agent Builder</emphasis> and <emphasis level="strong">Elasticsearch</emphasis>. We use <emphasis level="strong">ELSER v2</emphasis> for semantic search over legal contracts, and <emphasis level="strong">ES|QL</emphasis> for live data inspection, remediation, and time-series audit. One agent, policy plus data plus action.
+<break time="1s"/>
+In this demo we have contracts in our knowledge base and access to customer leads and access logs. In most companies, using a dataset for marketing means waiting days for legal to check contracts and data. We automated that.
+</p>
+
+<break time="1s"/>
+
+<p>
+First, policy. I type: what is our policy on emailing minors according to the contracts?
+<break time="300ms"/>
+The agent uses <emphasis level="strong">policy_retriever</emphasis>. That tool runs <emphasis level="strong">ELSER v2</emphasis> — Elastic's Learned Sparse EncodeR — on our legal knowledge base and returns the exact clause with a source citation.
+</p>
+
+<break time="500ms"/>
+
+<p>
+Next, the data check. I type: can I use customer_leads_prod for email marketing? Check policy and data.
+<break time="300ms"/>
+The agent calls both <emphasis level="strong">policy_retriever</emphasis> and <emphasis level="strong">dataset_inspector</emphasis>. The inspector runs <emphasis level="strong">ES|QL</emphasis> against our production index in real time and counts minors and restricted regions. As you can see, it denies the request with actual numbers from the cluster.
+</p>
+
+<break time="1s"/>
+
+<p>
+Now remediation. I ask: give me an ES|QL query to exclude minors and restricted regions. The agent returns a runnable query — filter by age and region.
+<break time="400ms"/>
+Then I click Run remediation now in the sidebar. Our app calls the remediation API, which runs that ES|QL and bulk-indexes compliant records into a new index. You see the green success box — we didn't just suggest, we created the safe dataset.
+</p>
+
+<break time="3s"/>
+
+<p>
+We also added a time-series auditor and an MCP server. I can ask: have there been any compliance breaches in the last seven days? The <emphasis level="strong">log_auditor</emphasis> ES|QL tool queries access logs. For the MCP part I demo in <emphasis level="strong">Claude Desktop</emphasis>: I add our locally running MCP server, then use the <emphasis level="strong">check_compliance</emphasis> tool — same agent, right inside Claude.
+</p>
+
+<break time="500ms"/>
+
+<p>
+So: <emphasis level="strong">ELSER v2</emphasis> for semantic search, <emphasis level="strong">ES|QL</emphasis> for live data and logs, and <emphasis level="strong">Agent Builder</emphasis> for tool orchestration. One agent, policy plus data plus remediation plus audit. Thank you.
+</p>
+</speak>
