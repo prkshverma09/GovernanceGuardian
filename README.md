@@ -8,6 +8,56 @@
 - 🛡️ **Automated Decision Making**: Denies or approves data usage requests based on grounded evidence from both policies and the data itself.
 - 💬 **Interactive Chat UI**: A Streamlit-based interface for compliance officers to audit and remediate issues.
 
+## Architecture
+
+```mermaid
+flowchart TB
+    subgraph Users["Users"]
+        UI[Streamlit Chat UI]
+        IDE[Cursor / Claude Desktop]
+    end
+
+    subgraph App["Application Layer"]
+        AC[AgentClient]
+        RA[Remediation API<br/>Flask]
+        MCP[MCP Server<br/>FastMCP]
+    end
+
+    subgraph Elastic["Elastic Cloud"]
+        AB[Agent Builder<br/>Kibana API]
+        subgraph ES["Elasticsearch"]
+            LKB[(legal-knowledge-base)]
+            CLP[(customer_leads_prod)]
+            DAL[(data_access_logs_prod)]
+            CLS[(customer_leads_safe)]
+        end
+    end
+
+    subgraph Tools["Agent Tools"]
+        PR[policy_retriever<br/>ELSER v2 / Index Search]
+        DI[dataset_inspector<br/>ES|QL]
+        LA[log_auditor<br/>ES|QL]
+    end
+
+    UI --> AC
+    UI -->|"Run remediation now"| RA
+    AC --> AB
+    IDE --> MCP
+    MCP --> AC
+
+    AB --> PR
+    AB --> DI
+    AB --> LA
+    PR --> LKB
+    DI --> CLP
+    LA --> DAL
+    RA --> CLS
+
+    Ingestion[Ingestion Scripts] --> ES
+```
+
+**Flow:** The Streamlit UI and MCP server send messages to the **Agent Builder** via the Kibana API. The agent chooses tools: **policy_retriever** (ELSER v2 over `legal-knowledge-base`), **dataset_inspector** (ES|QL on `customer_leads_prod`), **log_auditor** (ES|QL on `data_access_logs_prod`). Clicking **Run remediation now** calls the **Remediation API**, which runs a safe ES|QL query and writes compliant rows to `customer_leads_safe`. Ingestion scripts populate the Elasticsearch indices.
+
 ## Tech Stack
 - **Elastic Cloud**: Elasticsearch (Serverless), ELSER v2.
 - **Elastic Agent Builder**: For persona, instructions, and tools (Semantic Search & ES|QL).
